@@ -1,0 +1,17 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "type":"object",
+  "required":[
+    "userId",
+    "otp"
+  ],
+  "properties":{
+    "userId":{
+      "uniqueItems":true,
+      "type":"string"
+    },
+    "otp":{
+      "type":"string"
+    }
+  }
+}

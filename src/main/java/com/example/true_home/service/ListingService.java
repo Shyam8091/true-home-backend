@@ -16,5 +16,5 @@ public interface ListingService {
 
     ResponseEntity<RestResponse<AccountListingResponse>> getListingFromAccount();
 
-    ResponseEntity<RestResponse<ListingResponseDto>> getProductById(Integer id);
+    ResponseEntity<RestResponse<ListingResponseDto>> getProductById(Integer id, final boolean isLoggedIn);
 }

@@ -41,6 +41,8 @@ public class Listing extends CommonEntity implements Serializable {
     @Transient
     private boolean wishListed;
 
+    @Transient Long wishListId;
+
     public Listing(int id) {
         this.id = id;
     }

@@ -45,8 +45,8 @@ public class ListingController {
     }
 
     @GetMapping(TrueHomeConstants.LISTING_BY_ID)
-    public ResponseEntity<RestResponse<ListingResponseDto>> getProductById(final @PathVariable Integer id) {
-        ResponseEntity<RestResponse<ListingResponseDto>> products = listingService.getProductById(id);
+    public ResponseEntity<RestResponse<ListingResponseDto>> getProductById(final @PathVariable Integer id, final @RequestHeader("isLogged") boolean isLoggedIn) {
+        ResponseEntity<RestResponse<ListingResponseDto>> products = listingService.getProductById(id, isLoggedIn);
         return products;
     }
 }

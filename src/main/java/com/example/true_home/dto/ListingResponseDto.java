@@ -29,5 +29,6 @@ public class ListingResponseDto {
     private String apartmentType;
     private long wishlistCount;
     private boolean wishListed;
+    private Long wishListId;
 
 }

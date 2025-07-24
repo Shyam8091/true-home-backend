@@ -58,6 +58,7 @@ public class ListingServiceImpl implements ListingService {
             Listing listing = projection.getListing();
             listing.setWishlistCount(projection.getWishlistCount());
             listing.setWishListed(projection.isWishlisted());
+            listing.setWishListId(projection.getWishlistedId());
             return listing;
         }).collect(Collectors.toList());
         List<ListingResponseDto> collect = getListingResponse(listings);
@@ -94,6 +95,7 @@ public class ListingServiceImpl implements ListingService {
             dto.setImages(base64Images);
             dto.setWishlistCount(listing.getWishlistCount());
             dto.setWishListed(listing.isWishListed());
+            dto.setWishListId(listing.getWishListId());
             return dto;
         }).collect(Collectors.toList());
     }
@@ -156,9 +158,19 @@ public class ListingServiceImpl implements ListingService {
         return RestUtils.successResponse(AccountListingResponse.builder().listingsFound(!listingResponse.isEmpty()).accountListings(listingResponse).build(), HttpStatus.OK, "Listing fetched successfully");
     }
 
+    //ADD projection empty check
     @Override
-    public ResponseEntity<RestResponse<ListingResponseDto>> getProductById(Integer id) {
-        Listing listing = listingRepository.findById(id).orElseThrow(() -> new TrueHomException(null, "No Listing found", "OS_500"));
+    @Transactional
+    public ResponseEntity<RestResponse<ListingResponseDto>> getProductById(Integer id, final boolean isLoggedIn) {
+        ListingWithWishlistCountProjection projection;
+        if (isLoggedIn) {
+            int accountId = trueHomeUtil.getUserIdFromAuthentication();
+            //TODO - when loggedInUser we are getting wishListId for all product it should only come for logedIn user id only
+            projection = listingRepository.findListingWithWishlistInfo(id, accountId);
+        } else {
+            projection = listingRepository.findListingWithWishlistInfo(id);
+        }
+        Listing listing = projection.getListing();
         ListingResponseDto responseDto = ListingResponseDto.builder().
                 id(listing.getId()).
                 projectName(listing.getProjectName()).
@@ -174,8 +186,10 @@ public class ListingServiceImpl implements ListingService {
                         .collect(Collectors.toList())).
                 area(listing.getArea()).
                 apartmentType(listing.getApartmentType()).
-                wishlistCount(listing.getWishlistCount()).
-                wishListed(listing.isWishListed()).build();
+                wishlistCount(projection.getWishlistCount()).
+                wishListed(projection.isWishlisted()).
+                wishListId(projection.getWishlistedId()).build();
+
         return RestUtils.successResponse(responseDto, HttpStatus.OK, "Listing fetched successfully");
     }
 }

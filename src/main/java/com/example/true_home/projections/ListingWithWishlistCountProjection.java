@@ -8,4 +8,6 @@ public interface ListingWithWishlistCountProjection {
     long getWishlistCount();
 
     boolean isWishlisted();
+
+    Long getWishlistedId();
 }

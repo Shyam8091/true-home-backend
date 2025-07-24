@@ -26,11 +26,35 @@ public interface ListingRepository extends JpaRepository<Listing, Integer> {
 
     @Query("SELECT l AS listing, " +
             "COUNT(w.id) AS wishlistCount, " +
+            "(w.id) AS wishlistedId, " +
             "CASE WHEN COUNT(w2.id) > 0 THEN true ELSE false END AS wishlisted " +
             "FROM Listing l " +
             "LEFT JOIN Wishlist w ON w.product = l " +
             "LEFT JOIN Wishlist w2 ON w2.product = l AND w2.account.id = :accountId " +
             "GROUP BY l.id")
     List<ListingWithWishlistCountProjection> findAllListingsWithWishlistCount(@Param("accountId") Integer accountId);
+
+    @Query("SELECT l AS listing , " +
+            "COUNT(w.id) AS wishlistCount , " +
+            "CASE WHEN COUNT(w2.id) > 0 THEN true ELSE false END AS wishlisted , " +
+            "MAX(w2.id) AS wishlistedId " +
+            " FROM Listing l " +
+            " LEFT JOIN Wishlist w ON w.product = l " +
+            " LEFT JOIN Wishlist w2 ON w2.product = l AND w2.account.id = :accountId " +
+            " WHERE l.id = :listingId " +
+            " GROUP BY l ")
+    ListingWithWishlistCountProjection findListingWithWishlistInfo(
+            @Param("listingId") Integer listingId,
+            @Param("accountId") Integer accountId);
+
+    @Query("SELECT l AS listing , " +
+            "COUNT(w.id) AS wishlistCount, " +
+            "false AS wishlisted "+
+            "FROM Listing l " +
+            "LEFT JOIN Wishlist w ON w.product = l " +
+            "WHERE l.id = :listingId " +
+            "GROUP BY l")
+    ListingWithWishlistCountProjection findListingWithWishlistInfo(@Param("listingId") Integer listingId);
+
 
 }

@@ -12,6 +12,7 @@ public final class TrueHomeConstants {
     public static final String ACCOUNT_LISTING = "/account/listing";
     public static final String ORDERS = "/order";
     public static final String USER = "/user";
+    public static final String DASHBOARD = "/dashboard";
 
     public static final String VALIDATION_ERROR_CODE = "MBD-001";
     public static final String USER_NOT_FOUND = "User Not Found";

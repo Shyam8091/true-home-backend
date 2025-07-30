@@ -9,6 +9,6 @@ import java.util.List;
 @Data
 public class AccountListingResponse {
     private boolean listingsFound;
-    private List<ListingResponseDto> accountListings;
+    private List<WishlistOrOrderOrAccountListingResponse> accountListings;
 
 }

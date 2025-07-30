@@ -11,5 +11,5 @@ public class OrderResponse {
     private boolean orderFound;
     private int rentedPropertyCount;
     private int purchasesPropertyCount;
-    private List<WishlistOrOrderResponse> orders;
+    private List<WishlistOrOrderOrAccountListingResponse> orders;
 }

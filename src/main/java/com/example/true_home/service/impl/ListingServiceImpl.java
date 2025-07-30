@@ -3,6 +3,7 @@ package com.example.true_home.service.impl;
 import com.example.true_home.dto.AccountListingResponse;
 import com.example.true_home.dto.ListingDto;
 import com.example.true_home.dto.ListingResponseDto;
+import com.example.true_home.dto.WishlistOrOrderOrAccountListingResponse;
 import com.example.true_home.entity.Image;
 import com.example.true_home.entity.Listing;
 import com.example.true_home.entity.User;
@@ -154,7 +155,7 @@ public class ListingServiceImpl implements ListingService {
     @Override
     public ResponseEntity<RestResponse<AccountListingResponse>> getListingFromAccount() {
         List<Listing> listingFromAccount = listingRepository.getListingFromAccount(trueHomeUtil.getUserIdFromAuthentication());
-        List<ListingResponseDto> listingResponse = getListingResponse(listingFromAccount);
+        List<WishlistOrOrderOrAccountListingResponse> listingResponse = getAccountListingResponse(listingFromAccount);
         return RestUtils.successResponse(AccountListingResponse.builder().listingsFound(!listingResponse.isEmpty()).accountListings(listingResponse).build(), HttpStatus.OK, "Listing fetched successfully");
     }
 
@@ -191,6 +192,17 @@ public class ListingServiceImpl implements ListingService {
                 wishListId(projection.getWishlistedId()).build();
 
         return RestUtils.successResponse(responseDto, HttpStatus.OK, "Listing fetched successfully");
+    }
+
+
+    private List<WishlistOrOrderOrAccountListingResponse> getAccountListingResponse(List<Listing> listings) {
+        return listings.stream().map(listing -> {
+
+            WishlistOrOrderOrAccountListingResponse dto = new WishlistOrOrderOrAccountListingResponse();
+            dto.setId(listing.getId());
+            dto.setProduct(listing);
+            return dto;
+        }).collect(Collectors.toList());
     }
 }
 

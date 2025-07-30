@@ -10,13 +10,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
-public class WishlistOrOrderResponse {
+public class WishlistOrOrderOrAccountListingResponse {
 
     private int id;
 
     private Listing product;
 
-    public WishlistOrOrderResponse(int id, Listing product) {
+    public WishlistOrOrderOrAccountListingResponse(int id, Listing product) {
         this.id = id;
         this.product = product;
     }

@@ -9,5 +9,5 @@ import java.util.List;
 @Builder
 public class WishlistResponse {
     private boolean wishListFound;
-    private List<WishlistOrOrderResponse> wishList;
+    private List<WishlistOrOrderOrAccountListingResponse> wishList;
 }

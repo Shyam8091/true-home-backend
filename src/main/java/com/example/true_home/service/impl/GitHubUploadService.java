@@ -14,7 +14,7 @@ import java.util.Map;
 @Service
 public class GitHubUploadService {
 
-    @Value("github_sec")
+    @Value("${github_sec}")
     private String GITHUB_TOKEN; // Your GitHub Personal Access Token
 
     @Autowired

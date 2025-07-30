@@ -3,7 +3,7 @@ package com.example.true_home.service.impl;
 import com.example.true_home.dto.CartRequestDto;
 import com.example.true_home.dto.Response;
 import com.example.true_home.dto.UpdateResponse;
-import com.example.true_home.dto.WishlistOrOrderResponse;
+import com.example.true_home.dto.WishlistOrOrderOrAccountListingResponse;
 import com.example.true_home.dto.WishlistResponse;
 import com.example.true_home.entity.Listing;
 import com.example.true_home.entity.User;
@@ -32,7 +32,7 @@ public class WishListServiceImpl implements WishlistService {
 
     @Override
     public ResponseEntity<RestResponse<WishlistResponse>> getProductsByAccountId() {
-        List<WishlistOrOrderResponse> productsByAccountId = wishlistRepository.findOrderAndProductByAccountId(trueHomeUtil.getUserIdFromAuthentication());
+        List<WishlistOrOrderOrAccountListingResponse> productsByAccountId = wishlistRepository.findOrderAndProductByAccountId(trueHomeUtil.getUserIdFromAuthentication());
         return RestUtils.successResponse(WishlistResponse.builder().wishList(productsByAccountId).wishListFound(!productsByAccountId.isEmpty()).build(), HttpStatus.OK, "Fetched All wishlist successfully");
     }
 

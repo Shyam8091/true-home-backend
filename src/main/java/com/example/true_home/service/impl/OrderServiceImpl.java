@@ -3,7 +3,7 @@ package com.example.true_home.service.impl;
 import com.example.true_home.dto.CartRequestDto;
 import com.example.true_home.dto.OrderResponse;
 import com.example.true_home.dto.Response;
-import com.example.true_home.dto.WishlistOrOrderResponse;
+import com.example.true_home.dto.WishlistOrOrderOrAccountListingResponse;
 import com.example.true_home.entity.Listing;
 import com.example.true_home.entity.Order;
 import com.example.true_home.entity.User;
@@ -34,7 +34,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ResponseEntity<RestResponse<OrderResponse>> getAllOrdersByAccountId() {
-        List<WishlistOrOrderResponse> orderList = orderRepository.findOrderByAccountId(trueHomeUtil.getUserIdFromAuthentication());
+        List<WishlistOrOrderOrAccountListingResponse> orderList = orderRepository.findOrderByAccountId(trueHomeUtil.getUserIdFromAuthentication());
         Map<String, Integer> collect = orderList.stream().collect(Collectors.groupingBy(order -> order.getProduct().getType(), Collectors.collectingAndThen(Collectors.counting(), Long::intValue)));
         OrderResponse response = OrderResponse.builder()
                 .orders(orderList)

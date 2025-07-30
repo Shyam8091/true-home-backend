@@ -1,6 +1,6 @@
 package com.example.true_home.repository;
 
-import com.example.true_home.dto.WishlistOrOrderResponse;
+import com.example.true_home.dto.WishlistOrOrderOrAccountListingResponse;
 import com.example.true_home.entity.Listing;
 import com.example.true_home.entity.Wishlist;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,9 +24,9 @@ public interface WishlistRepository extends JpaRepository<Wishlist, Integer> {
     @Query("SELECT w.product FROM Wishlist w WHERE w.account.id = :accountId")
     List<Listing> findProductsByAccountId(int accountId);
 
-    @Query("SELECT new com.example.true_home.dto.WishlistOrOrderResponse(w.id , w.product) " +
+    @Query("SELECT new com.example.true_home.dto.WishlistOrOrderOrAccountListingResponse(w.id , w.product) " +
             "FROM Wishlist w WHERE w.account.id = :accountId")
-    List<WishlistOrOrderResponse> findOrderAndProductByAccountId(int accountId);
+    List<WishlistOrOrderOrAccountListingResponse> findOrderAndProductByAccountId(int accountId);
 
     @Modifying
     @Transactional

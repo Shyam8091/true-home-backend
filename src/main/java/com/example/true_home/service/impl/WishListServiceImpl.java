@@ -40,14 +40,16 @@ public class WishListServiceImpl implements WishlistService {
     @Transactional
     public ResponseEntity<RestResponse<Response>> addToWishList(CartRequestDto cartRequestDto) {
         Wishlist wishlist = new Wishlist();
+        long id;
         wishlist.setAccount(new User(trueHomeUtil.getUserIdFromAuthentication())); // Assuming a constructor or setter exists in User class
         wishlist.setProduct(new Listing(cartRequestDto.getListingId())); // Assuming a constructor or setter exists in Listing class
         try {
-            wishlistRepository.save(wishlist);
+            Wishlist save = wishlistRepository.save(wishlist);
+            id = save.getId();
         } catch (Exception exception) {
             throw new TrueHomException(null, "INTERNAL_SERVER_ERROR", "OS_500");
         }
-        return RestUtils.successResponse(Response.builder().message("Added to WishList successfully").build(), HttpStatus.OK, "Fetched All wishlist successfully");
+        return RestUtils.successResponse(Response.builder().message("Added to WishList successfully").id(id).build(), HttpStatus.OK, "Fetched All wishlist successfully");
 
     }
 
@@ -60,29 +62,5 @@ public class WishListServiceImpl implements WishlistService {
         updateResponse.setMessage("Wishlist removed successfully");
         return RestUtils.successResponse(updateResponse, HttpStatus.OK, "Wishlist updated successfully");
     }
-
-//    public List<Listing> fetchWishlistedInBatches(int accountId, int batchSize) {
-//        int offset = 0;
-//        List<Listing> wishlistedProducts = new ArrayList<>();
-//
-//        while (true) {
-//            List<Listing> batch = wishlistRepository.findWishlistByAccountId(accountId, batchSize, offset);
-//            if (batch.isEmpty()) {
-//                break;
-//            }
-//            wishlistedProducts.addAll(batch);
-//            offset += batchSize;
-//        }
-//        return wishlistedProducts;
-//    }
-
-    public void addProductToWishlist(int accountId, int productId) {
-        // Add implementation logic for adding product to wishlist
-    }
-
-    public void removeProductFromWishlist(int accountId, int productId) {
-        // Add implementation logic for removing product from wishlist
-    }
-
 
 }

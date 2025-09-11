@@ -47,9 +47,9 @@ public class ListingController {
                                                                                  @Min(value = 1, message = "Invalid Size")
                                                                                  @Max(value = 100, message = "Invalid Size")
                                                                                  int size,
-                                                                                 @Size(max = 28, message = "Invalid city") final @RequestParam(name = "city", required = false) String city, @RequestParam(name = "locality", required = false) List<String> locality) {
+                                                                                 @Size(max = 28, message = "Invalid city") final @RequestParam(name = "city", required = false) String city, @RequestParam(name = "locality", required = false) List<String> locality, @RequestParam(name = "propertyType", required = false) String propertyType) {
 
-        ResponseEntity<RestResponse<Page<ListingResponseDto>>> products = listingService.getAllListings(isLoggedIn, type, page, size, city, locality);
+        ResponseEntity<RestResponse<Page<ListingResponseDto>>> products = listingService.getAllListings(isLoggedIn, type, page, size, city, locality, propertyType);
         return products;
     }
 

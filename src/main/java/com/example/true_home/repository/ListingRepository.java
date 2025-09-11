@@ -28,17 +28,20 @@ public interface ListingRepository extends JpaRepository<Listing, Integer> {
                     "WHERE (:type IS NULL OR :type = '' OR l.type = :type) " +
                     "AND (:city IS NULL OR :city = '' OR l.city = :city) " +
                     "AND (COALESCE(:locality, NULL) IS NULL OR l.locality IN :locality) " +
+                    "AND (:propertyType IS NULL OR :propertyType = '' OR l.apartmentType = :propertyType) " +
                     "GROUP BY l.id",
             countQuery = "SELECT COUNT(l) " +
                     "FROM Listing l " +
                     "WHERE (:type IS NULL OR :type = '' OR l.type = :type) " +
                     "AND (:city IS NULL OR :city = '' OR l.city = :city) " +
-                    "AND (COALESCE(:locality, NULL) IS NULL OR l.locality IN :locality)"
+                    "AND (COALESCE(:locality, NULL) IS NULL OR l.locality IN :locality) " +
+                    "AND (:propertyType IS NULL OR :propertyType = '' OR l.apartmentType = :propertyType)"
     )
     Page<ListingWithWishlistCountProjection> findAllListingsWithWishlistCount(
             @Param("type") String type,
             @Param("city") String city,
             @Param("locality") List<String> locality,
+            @Param("propertyType") String propertyType,
             Pageable pageable
     );
 
@@ -46,7 +49,7 @@ public interface ListingRepository extends JpaRepository<Listing, Integer> {
     @Query(
             value = "SELECT l AS listing, " +
                     "COUNT(w.id) AS wishlistCount, " +
-                    "(w.id) AS wishlistedId, " +
+                    "MAX(w2.id) AS wishlistedId, " +
                     "CASE WHEN COUNT(w2.id) > 0 THEN true ELSE false END AS wishlisted " +
                     "FROM Listing l " +
                     "LEFT JOIN Wishlist w ON w.product = l " +
@@ -54,18 +57,22 @@ public interface ListingRepository extends JpaRepository<Listing, Integer> {
                     "WHERE (:type IS NULL OR :type = '' OR l.type = :type) " +
                     "AND (:city IS NULL OR :city = '' OR l.city = :city) " +
                     "AND (COALESCE(:locality, NULL) IS NULL OR l.locality IN :locality) " +
+                    "AND (:propertyType IS NULL OR :propertyType = '' OR l.apartmentType = :propertyType) " +
                     "GROUP BY l.id",
             countQuery = "SELECT COUNT(l) " +
                     "FROM Listing l " +
                     "WHERE (:type IS NULL OR :type = '' OR l.type = :type) " +
                     "AND (:city IS NULL OR :city = '' OR l.city = :city) " +
-                    "AND (COALESCE(:locality, NULL) IS NULL OR l.locality IN :locality)"
+                    "AND (COALESCE(:locality, NULL) IS NULL OR l.locality IN :locality) " +
+                    "AND (:accountId IS NULL OR :accountId = :accountId) " +
+                    "AND (:propertyType IS NULL OR :propertyType = '' OR l.apartmentType = :propertyType)"
     )
-    Page<ListingWithWishlistCountProjection> findAllListingsWithWishlistCount(
+    Page<ListingWithWishlistCountProjection> findAllListingsWithWishlistCountForAccount(
             @Param("accountId") Integer accountId,
             @Param("type") String type,
             @Param("city") String city,
             @Param("locality") List<String> locality,
+            @Param("propertyType") String propertyType,
             Pageable pageable
     );
 

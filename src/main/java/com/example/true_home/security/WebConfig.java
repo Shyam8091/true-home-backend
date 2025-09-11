@@ -15,6 +15,13 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedHeaders("*")
                 .exposedHeaders("Authorization")  // Expose the Authorization header
                 .allowCredentials(true);
+
+//        registry.addMapping("/**")
+//                .allowedOriginPatterns("*") // allow all origins
+//                .allowedMethods("*")        // allow all HTTP methods
+//                .allowedHeaders("*")        // allow all headers
+//                .exposedHeaders("Authorization")
+//                .allowCredentials(true);
     }
 }
 

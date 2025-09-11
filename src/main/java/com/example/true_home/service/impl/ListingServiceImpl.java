@@ -54,15 +54,16 @@ public class ListingServiceImpl implements ListingService {
 
     @Override
     public ResponseEntity<RestResponse<Page<ListingResponseDto>>> getAllListings(final boolean isLoggedIn, final String type, final int page,
-                                                                                 final int size, final String city, List<String> locality) {
+                                                                                 final int size, final String city, List<String> locality, String propertyType) {
         long startTime = System.currentTimeMillis();
         Page<ListingWithWishlistCountProjection> projections;
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
         if (isLoggedIn) {
             int accountId = trueHomeUtil.getUserIdFromAuthentication();
-            projections = listingRepository.findAllListingsWithWishlistCount(accountId, type, city, locality, pageable);
+            System.out.println("accountId: " + accountId + " isLoggedIn " + isLoggedIn);
+            projections = listingRepository.findAllListingsWithWishlistCountForAccount(accountId, type, city, locality, propertyType, pageable);
         } else {
-            projections = listingRepository.findAllListingsWithWishlistCount(type, city, locality, pageable);
+            projections = listingRepository.findAllListingsWithWishlistCount(type, city, locality, propertyType, pageable);
         }
 
         long endTime = System.currentTimeMillis();

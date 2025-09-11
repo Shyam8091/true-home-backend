@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface ListingService {
-    ResponseEntity<RestResponse<Page<ListingResponseDto>>> getAllListings(final boolean isLoggedIn, final String type, final int page, final int size, final String city, List<String> locality);
+    ResponseEntity<RestResponse<Page<ListingResponseDto>>> getAllListings(final boolean isLoggedIn, final String type, final int page, final int size, final String city, List<String> locality, final String propertyType);
 
     ResponseEntity<RestResponse<Listing>> uploadListing(ListingDto listingDto);
 

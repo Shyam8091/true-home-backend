@@ -28,13 +28,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = TrueHomeConstants.ROOT)
+
 @Validated
+
 public class ListingController {
 
     @Autowired
     ListingService listingService;
 
     @GetMapping(TrueHomeConstants.LISTING)
+
     public ResponseEntity<RestResponse<Page<ListingResponseDto>>> getProductList(final @RequestHeader("isLogged") boolean isLoggedIn,
                                                                                  final @RequestParam(name = "type", required = false)
                                                                                  @Pattern(regexp = "Rent|Sell|", message = "Type Does not match")
@@ -50,12 +53,16 @@ public class ListingController {
                                                                                  @Size(max = 28, message = "Invalid city") final @RequestParam(name = "city", required = false) String city, @RequestParam(name = "locality", required = false) List<String> locality, @RequestParam(name = "propertyType", required = false) String propertyType) {
 
         ResponseEntity<RestResponse<Page<ListingResponseDto>>> products = listingService.getAllListings(isLoggedIn, type, page, size, city, locality, propertyType);
+
+
         return products;
     }
 
     @PostMapping(TrueHomeConstants.LISTING)
+
     public ResponseEntity<RestResponse<Listing>> uploadListing(@ModelAttribute ListingDto formData) {
         ResponseEntity<RestResponse<Listing>> restResponseResponseEntity = listingService.uploadListing(formData);
+
         return restResponseResponseEntity;
     }
 
@@ -66,14 +73,18 @@ public class ListingController {
     }
 
     @GetMapping(TrueHomeConstants.LISTING_BY_ID)
-    public ResponseEntity<RestResponse<ListingResponseDto>> getProductById(final @PathVariable Integer id, final @RequestHeader("isLogged") boolean isLoggedIn) {
+    public ResponseEntity<RestResponse<ListingResponseDto>> getProductById(final @PathVariable Integer id,
+                                                                           final @RequestHeader("isLogged") boolean isLoggedIn) {
         ResponseEntity<RestResponse<ListingResponseDto>> products = listingService.getProductById(id, isLoggedIn);
         return products;
     }
 
+
     @GetMapping(TrueHomeConstants.HOMEPAGE_LISTING)
-    public ResponseEntity<RestResponse<List<ListingResponseDto>>> getHomePageListings(final @RequestHeader("isLogged") boolean isLoggedIn) {
+    public ResponseEntity<RestResponse<List<ListingResponseDto>>> getHomePageListings(
+            final @RequestHeader("isLogged") boolean isLoggedIn) {
         ResponseEntity<RestResponse<List<ListingResponseDto>>> products = listingService.getHomePageListings(isLoggedIn);
         return products;
     }
+
 }

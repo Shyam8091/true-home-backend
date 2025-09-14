@@ -11,6 +11,7 @@ public class ListingDto {
     private String projectName;
     private String type;
     private String bhk;
+
     private Integer floor;
     private Integer totalFloor;
     private Double price;
@@ -18,6 +19,7 @@ public class ListingDto {
     private String city;
     private String postal;
     private String state;
+
     private String locality;
     private String ownerId;
     private List<String> amenities;

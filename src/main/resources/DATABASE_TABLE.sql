@@ -38,6 +38,8 @@ CREATE TABLE true_home.`T_LISTING` (
     apartmentType VARCHAR(50),
     floor INTEGER,
     totalFloor INTEGER,
+    locality VARCHAR(50)
+    amenities JSON,
     description VARCHAR(500),
     city VARCHAR(50),
     postal VARCHAR(50),

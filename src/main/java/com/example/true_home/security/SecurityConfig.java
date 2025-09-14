@@ -26,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/truehome/api/generateOtp","/truehome/api/signup").permitAll() // Allow public access to OTP generation
+                .antMatchers("/truehome/api/generateOtp","/truehome/api/signup","/api/youtube/upload").permitAll() // Allow public access to OTP generation
                 .antMatchers(HttpMethod.GET, "/truehome/api/listing").permitAll()
                 .antMatchers(HttpMethod.GET, "/truehome/api/listing/*").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()

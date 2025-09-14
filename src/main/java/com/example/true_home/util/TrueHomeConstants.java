@@ -8,11 +8,13 @@ public final class TrueHomeConstants {
     public static final String VERIFY_OTP = "/verifyOtp";
     public static final String USER_SIGNUP = "/signup";
     public static final String LISTING = "/listing";
+    public static final String HOMEPAGE_LISTING = "/listing/home";
     public static final String LISTING_BY_ID = "/listing/{id}";
     public static final String ACCOUNT_LISTING = "/account/listing";
     public static final String ORDERS = "/order";
     public static final String USER = "/user";
     public static final String DASHBOARD = "/dashboard";
+    public static final String ADDRESS_AUTO_COMPLETE = "/addressAutoComplete";
 
     public static final String VALIDATION_ERROR_CODE = "MBD-001";
     public static final String USER_NOT_FOUND = "User Not Found";

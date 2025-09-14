@@ -25,7 +25,10 @@ import javax.transaction.Transactional;
 import java.security.SecureRandom;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class OTPServiceImpl implements OTPService {
@@ -85,9 +88,18 @@ public class OTPServiceImpl implements OTPService {
         if (i < 1) {
             throw new TrueHomException(null, "Something went wrong please try again", "OS_500");
         }
+        final Optional<User> userOptional = userRepo.findById(otpEntity.getUserId());
+        String initials = userOptional.map(user ->
+                        Stream.of(user.getFirstname(), user.getLastname()).
+                                filter(name -> name != null && !name.isEmpty())
+                                .map(name -> String.valueOf(name.charAt(0)))
+                                .collect(Collectors.joining()))
+                .map(String::toUpperCase).orElse("");
+        HttpHeaders responseHeaders = trueHomeUtil.getHttpHeaders(otpEntity.getUserId());
         UpdateResponse updateResponse = new UpdateResponse();
         updateResponse.setMessage("OTP verified successfully");
-        return RestUtils.successResponse(updateResponse, HttpStatus.OK, "OTP verified successfully");
+        updateResponse.setInitials(initials);
+        return RestUtils.successResponseWithHeaders(updateResponse, HttpStatus.OK, "OTP verified successfully", responseHeaders);
     }
 
     private void otpValidation(OtpEntity otpEntity) {

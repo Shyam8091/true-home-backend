@@ -23,12 +23,16 @@ public class ListingResponseDto {
     private String postal;
     private int floor;
     private int totalFloor;
+    private List<String> amenities;
     private String ownerId;
     private List<String> images;  // Base64 encoded images
-    private double area;
+    private Double area;
     private String apartmentType;
     private long wishlistCount;
+    private String locality;
     private boolean wishListed;
     private Long wishListId;
-
+    private String videoId;
+    private String postingDate;
+    private Long createDate;
 }

@@ -22,6 +22,8 @@ public class DashboardServiceImpl implements DashboardService {
     @Override
     public ResponseEntity<RestResponse<DashboardResponse>> getDashboardData() {
 
+
+
         DashboardResponse userDashboard = userRepo.getUserDashboard(trueHomeUtil.getUserIdFromAuthentication());
 
         return RestUtils.successResponse(userDashboard, HttpStatus.OK, "Dashboard fetched successfully");

@@ -1,6 +1,7 @@
 package com.example.true_home.dto;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.StringJoiner;
@@ -10,18 +11,22 @@ public class ListingDto {
     private String projectName;
     private String type;
     private String bhk;
-    private int floor;
-    private int totalFloor;
-    private double price;
+
+    private Integer floor;
+    private Integer totalFloor;
+    private Double price;
     private String description;
     private String city;
     private String postal;
     private String state;
-    private String ownerId;
 
+    private String locality;
+    private String ownerId;
+    private List<String> amenities;
     private List<String> images;
-    private double area;
+    private Double area;
     private String apartmentType;
+    private MultipartFile file;
 
 
     @Override

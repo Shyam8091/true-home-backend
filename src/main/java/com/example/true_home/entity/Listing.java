@@ -1,5 +1,6 @@
 package com.example.true_home.entity;
 
+import com.example.true_home.util.StringListConverter;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -20,6 +21,10 @@ public class Listing extends CommonEntity implements Serializable {
     @JoinColumn(name = "ownerId", nullable = false)
     private User owner;  // Reference to Account
 
+
+    @Column(columnDefinition = "json")
+    @Convert(converter = StringListConverter.class)
+    private List<String> amenities;
     private String projectName;
     private String type;
     private String bhk;
@@ -30,8 +35,11 @@ public class Listing extends CommonEntity implements Serializable {
     private String city;
     private String postal;
     private String state;
-    private double area;
+    private Double area;
+    private String locality;
     private String apartmentType;
+
+    private String videoId;
 
     @OneToMany(mappedBy = "listing", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> images = new ArrayList<>();

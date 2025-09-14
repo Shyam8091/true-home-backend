@@ -11,6 +11,8 @@ public class UpdateResponse {
     private String message;
     private Integer userId;
 
+    private String initials;
+
     @Override
     public String toString() {
         return new StringJoiner(", ", UpdateResponse.class.getSimpleName() + "{", "}")
